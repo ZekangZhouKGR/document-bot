@@ -47,6 +47,13 @@ services:
       - "etcd"
       - "minio"
 
+  attu:
+    image: zilliz/attu:v2.2.6
+    ports:
+      - "8000:3000"
+    environment:
+      - MILVUS_URL=milvus:19530
+
   lab:
     container_name: lab
     image: mcr.microsoft.com/vscode/devcontainers/python:3.10
