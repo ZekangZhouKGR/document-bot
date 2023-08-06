@@ -1,4 +1,5 @@
 import os
+from getpass import getpass
 
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
