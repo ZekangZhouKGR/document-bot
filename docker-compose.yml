@@ -74,3 +74,12 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/flowise:/root/.flowise
     command: /bin/sh -c "sleep 3; flowise start"
+
+  metagpt:
+    image: metagpt/metagpt:v0.3.1
+    container_name: metagpt
+    privileged: true
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/metagpt/config/key.yaml:/app/metagpt/config/key.yaml
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/metagpt/workspace:/app/metagpt/workspace
+    restart: always
