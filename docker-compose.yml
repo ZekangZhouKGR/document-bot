@@ -91,3 +91,20 @@ services:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/chroma/index:/chroma/.chroma/index
     ports:
       - '8001:8000'
+
+  vector-admin:
+    container_name: vector-admin
+    image: vector-admin:latest
+    user: "1000:1000"
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vector-admin/backend/storage:/app/.backend/storage
+    environment:
+      - SERVER_PORT=3001
+      - UID=1000
+      - GID=1000
+    env_file:
+      - lab.env
+    ports:
+      - "3001:3001"
+      - "3355:3355"
+      - "8288:8288"

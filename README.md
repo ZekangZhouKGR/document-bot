@@ -1,0 +1,1 @@
+**注意**：使用vector-admin前需要自行构建镜像[git仓库](https://github.com/Mintplex-Labs/vector-admin)
