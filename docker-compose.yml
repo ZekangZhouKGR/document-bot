@@ -83,3 +83,11 @@ services:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/metagpt/config/key.yaml:/app/metagpt/config/key.yaml
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/metagpt/workspace:/app/metagpt/workspace
     restart: always
+
+  chroma:
+    container_name: chroma
+    image: ghcr.io/chroma-core/chroma:latest
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/chroma/index:/chroma/.chroma/index
+    ports:
+      - '8001:8000'
