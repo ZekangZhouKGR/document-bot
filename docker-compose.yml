@@ -97,7 +97,7 @@ services:
     image: vector-admin:latest
     user: "1000:1000"
     volumes:
-      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vector-admin/backend/storage:/app/.backend/storage
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/vector-admin/backend/storage:/app/backend/storage
     environment:
       - SERVER_PORT=3001
       - UID=1000
