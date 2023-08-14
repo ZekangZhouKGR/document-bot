@@ -55,20 +55,43 @@ embedding = OpenAIEmbeddings(disallowed_special=())
 db = Chroma(collection_name=repo_name, client=chroma_client, embedding_function=embedding)
 
 # Load
-documents = []
-for mdx_file in repo_path.glob("**/*.mdx"):
-    loader = UnstructuredMarkdownLoader(str(mdx_file))
-    documents.extend(loader.load())
-print(len(documents))
+def load_documents_from_repo(repo_path):
+    """Loads Markdown documents from a Git repository into a list of texts.
 
-markdown_spliter = RecursiveCharacterTextSplitter.from_language(
-    language=Language.MARKDOWN,
-    chunk_size=4000,
-    chunk_overlap=200)
-texts = markdown_spliter.split_documents(documents)
-print(len(texts))
+    Args:
+    repo_path: Path object pointing to the root of the Git repository. 
+
+    Returns:
+    texts: A list of splitted texts extracted from the Markdown documents in the repository.
+
+    For each .md file in the repository, it will be loaded using the UnstructuredMarkdownLoader.
+    The extracted documents will be extended to the documents list.
+
+    The documents are then split into chunks using the RecursiveCharacterTextSplitter configured for Markdown.
+    The splitted texts are returned from this function.
+
+    Any errors during loading the Markdown files will be printed out but skipped.
+    """
+    documents = []
+    for mdx_file in repo_path.glob("**/*.md"):
+        loader = UnstructuredMarkdownLoader(str(mdx_file))
+        try:
+            doc = loader.load()
+            documents.extend(doc)
+        except:
+            print('parser error for', str(mdx_file))
+    print(len(documents))
+    
+    markdown_spliter = RecursiveCharacterTextSplitter.from_language(
+        language=Language.MARKDOWN,
+        chunk_size=4000,
+        chunk_overlap=200)
+    texts = markdown_spliter.split_documents(documents)
+    print(len(texts))
+    return texts
+
+texts = load_documents_from_repo(repo_path)
 db.add_documents(texts)
-
 retriever = db.as_retriever(
     search_type="mmr",  # Also test "similarity"
     search_kwargs={"k": 8},
@@ -81,9 +104,6 @@ qa = ConversationalRetrievalChain.from_llm(
     llm, retriever=retriever, memory=memory)
 
 questions = [
-    "What is the class hierarchy?",
-    "What classes are derived from the Chain class?",
-    "What one improvement do you propose in code in relation to the class herarchy for the Chain class?",
 ]
 
 for question in questions:
