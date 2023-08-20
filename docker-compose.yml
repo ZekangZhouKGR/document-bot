@@ -110,3 +110,13 @@ services:
       - "3001:3001"
       - "3355:3355"
       - "8288:8288"
+
+  sourcegraph:
+    container_name: sourcegraph
+    image: sourcegraph/server:4.5.1
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/sourcegraph/etc:/etc/sourcegraph
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/sourcegraph/var:/var/opt/sourcegraph
+    ports:
+      - "7080:7080"
+      - "3370:3370"
