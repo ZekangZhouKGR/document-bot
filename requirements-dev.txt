@@ -1,0 +1,7 @@
+openai
+tiktoken
+chromadb
+langchain
+gitpython
+unstructured
+markdown
