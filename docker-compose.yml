@@ -59,7 +59,7 @@ services:
     image: mcr.microsoft.com/vscode/devcontainers/python:3.10
     command: ["tail", "-f", "/etc/timezone"]
     env_file:
-      - lab.env
+      - env.lab
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}:/lab
 
@@ -70,7 +70,7 @@ services:
     environment:
       - PORT=3000
     env_file:
-      - lab.env
+      - env.lab
     ports:
       - '3000:3000'
     volumes:
@@ -105,7 +105,7 @@ services:
       - UID=1000
       - GID=1000
     env_file:
-      - lab.env
+      - env.lab
     ports:
       - "3001:3001"
       - "3355:3355"
@@ -127,6 +127,6 @@ services:
     volumes:
       - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/mongodb:/data/db
     env_file:
-      - lab.env
+      - env.lab
     ports:
       - "27017:27017"
