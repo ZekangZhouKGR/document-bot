@@ -120,3 +120,13 @@ services:
     ports:
       - "7080:7080"
       - "3370:3370"
+
+  mongodb:
+    image: mongo:4.4-rc
+    restart: always
+    volumes:
+      - ${DOCKER_VOLUME_DIRECTORY:-.}/volumes/mongodb:/data/db
+    env_file:
+      - lab.env
+    ports:
+      - "27017:27017"
