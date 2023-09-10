@@ -1,3 +1,10 @@
+#!/bin/python3
+"""
+name: Milvus Vector Database Setup
+description: 使用OpenAI嵌入和Milvus数据库，从文本加载器加载文档，创建Milvus向量数据库
+domain: 数据库
+tags: OpenAI嵌入, Milvus数据库, 文本加载器
+"""
 import os
 from getpass import getpass
 
